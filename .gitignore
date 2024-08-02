@@ -1,0 +1,7 @@
+cliente_sin_venv
+cliente/bin
+cliente/include
+cliente/lib
+cliente/lib64
+cliente/pyvenv.cfg
+cliente/share
