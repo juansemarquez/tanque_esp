@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Tanque de agua</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+      <div id="container">
+        <h1>Tanque de agua</h1>
+        <div class="tank">
+            <div class="water" style="height: 100%;"></div>
+        </div>
+        <div id="porcentaje"></div>
+        <div id="ultima"></div>
+        <div id="historico"><p><a href="historico.php">Ver histórico</a></p></div>
+        <input type="hidden" name="porcentaje" id="porcentaje_input" value="50">
+      </div>
+<script>
+document.addEventListener("DOMContentLoaded", function(event) { 
+    let i = document.querySelector('#porcentaje_input');
+    i.addEventListener("change", cambio_valor_tanque);
+
+    actualizar();
+
+    let intervalId = window.setInterval(function(){
+          actualizar();
+    }, 5000);
+
+    
+});
+
+function actualizar() {
+    const url = "ultima_medicion.php"
+    fetch(url)
+        .then(respuesta => respuesta.json())
+        .then(datos => {refrescar(datos)})
+        .catch(error => {console.log(error);});
+}
+
+function cambio_valor_tanque() {
+    let i = document.querySelector('#porcentaje_input');
+    const nivel_alarma = 25;
+    document.querySelector('#porcentaje').innerHTML = "" + i.value + "%";
+    let valor_dibujo = calcular_porcentaje_dibujo(parseInt(i.value));
+    if (parseInt(i.value) < nivel_alarma) {
+        document.querySelector('#container').style.color = "red";
+    } else {
+        document.querySelector('#container').style.color = "#0f5e9c";
+    }
+    document.querySelector('.water').style = "height: " + parseInt(valor_dibujo) + "%;";
+}
+
+function refrescar(datos)
+{
+    document.querySelector('#porcentaje_input').value = datos.porcentaje;
+    document.querySelector('#ultima').innerHTML = datos.ultima + "hs.<br>Basado en " + datos.mediciones + " mediciones válidas.";
+    cambio_valor_tanque();
+}
+
+
+function calcular_porcentaje_dibujo(valor)
+{
+    // El porcentaje del dibujo nunca llega al 100% ni al 0%, porque el tanque
+    // ni se llena ni se vacía nunca.
+    const valor100 = 95;
+    const valor0 = 5;
+    let valor_dibujo = (((valor100 - valor0) / 100) * valor) + valor0;
+    return valor_dibujo;
+}
+</script>
+    </body>
+</html>

@@ -1,0 +1,68 @@
+body {
+    background-color: black;
+}
+
+#container-historico {
+    text-align: center;
+    font-family: sans-serif;
+    margin: 50px auto;
+    color: #0f5e9c;
+    width: 90%;
+    background-color: #AFD2E9;
+    padding: 100px;
+    border-radius: 50px;
+    box-shadow: 5px 5px #AAAAAA;
+
+}
+
+#container {
+    text-align: center;
+    font-family: sans-serif;
+    margin: 50px auto;
+    color: #0f5e9c;
+    width: 300px;
+    background-color: #AFD2E9;
+    padding: 100px;
+    border-radius: 50px;
+    box-shadow: 5px 5px #AAAAAA;
+
+}
+
+#porcentaje {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.tank {
+    /* size */
+    width: 150px;
+    height: 200px;
+
+    /* colors */
+    border: 2px solid #0f5e9c;
+    background: white;
+
+    position: relative; /* to allow positioning the water at bottom */
+
+    display: inline-block; /* so the div doesn't wrap */
+    margin: 10px; /* space between divs */
+    border-radius: 10px;
+}
+
+.tank .water {
+    position: absolute;
+
+    /* color del agua */
+    background: #74ccf4;
+
+    /* posición del agua*/
+    width: 100%;
+    bottom: 0;
+
+    /* olitas */
+    --mask:
+        radial-gradient(21.47px at 50% 29px,#000 99%,#0000 101%) calc(50% - 20px) 0/40px 100%,
+        radial-gradient(21.47px at 50% -19px,#0000 99%,#000 101%) 50% 10px/40px 100% repeat-x;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+}
